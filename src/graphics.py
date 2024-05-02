@@ -27,6 +27,9 @@ class Window:
     def draw_line(self, line, color: str):
         line.draw(self.__canvas, color)
 
+    def draw_cell(self, x_1, y_1,  color: str):
+        line.draw(self.__canvas, color)
+
 
 class Point:
     def __init__(self, x_cord, y_cord):
