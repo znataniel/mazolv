@@ -17,7 +17,7 @@ def main():
     my_cells = []
     for i in range(rr(1, 10)):
         x_1, y_1 = rr(0 + CELL_W_H, 120 - CELL_W_H), rr(0 + CELL_W_H, 600 - CELL_W_H)
-        x_2, y_2 = x_1 + CELL_W_H, y_1 + CELL_W_H
+        x_2, y_2 = x_1 + CELL_W_H, y_1 - CELL_W_H
         my_cells.append(Cell(x_1, x_2, y_1, y_2, main))
     for c in my_cells:
         c.draw()
