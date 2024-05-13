@@ -22,7 +22,12 @@ class Cell:
                 self.__win.draw_line(walls[i], "blue")
 
     def draw_move(self, other_cell, undo=False):
-        self_center = Point((self.__x_1 + self.__x_2) / 2, (self.__y_1 + self.__y_2) / 2)
-        other_center = Point((other_cell.__x_1 + other_cell.__x_2) / 2, (other_cell.__y_1 + other_cell.__y_2) / 2)
+        self_center = Point(
+            (self.__x_1 + self.__x_2) / 2, (self.__y_1 + self.__y_2) / 2
+        )
+        other_center = Point(
+            (other_cell.__x_1 + other_cell.__x_2) / 2,
+            (other_cell.__y_1 + other_cell.__y_2) / 2,
+        )
         line = Line(self_center, other_center)
         self.__win.draw_line(line, "gray" if undo else "red")

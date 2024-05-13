@@ -5,12 +5,6 @@ from random import randrange as rr
 
 def main():
     main = Window(120, 600)
-    # --- Line drawing test
-    my_line = Line(
-        Point(rr(0, 120), rr(0, 600)),
-        Point(rr(0, 120), rr(0, 600)),
-    )
-    main.draw_line(my_line, "green")
 
     # --- Cell drawing test
     CELL_W_H = 30
@@ -22,7 +16,7 @@ def main():
     for c in my_cells:
         c.draw()
     for i in range(len(my_cells) - 1):
-        my_cells[i].draw_move(my_cells[i+1], bool(rr(0,2)))
+        my_cells[i].draw_move(my_cells[i + 1], bool(rr(0, 2)))
     main.wait_for_close()
 
 
