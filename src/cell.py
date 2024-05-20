@@ -2,32 +2,38 @@ from graphics import Point, Window, Line
 
 
 class Cell:
-    def __init__(self, x_1, x_2, y_1, y_2, window: Window):
+    def __init__(self, window=None):
         self.has_walls = [True for i in range(4)]
-        self.__x_1 = x_1
-        self.__x_2 = x_2
-        self.__y_1 = y_1
-        self.__y_2 = y_2
-        self.__win = window
+        self._x_1 = None
+        self._x_2 = None
+        self._y_1 = None
+        self._y_2 = None
+        self._win = window
 
-    def draw(self):
+    def draw(self, x_1, x_2, y_1, y_2):
+        if self._win is None:
+            return
+        self._x_1 = x_1
+        self._x_2 = x_2
+        self._y_1 = y_1
+        self._y_2 = y_2
         walls = [
-            Line(Point(self.__x_1, self.__y_1), Point(self.__x_1, self.__y_2)),
-            Line(Point(self.__x_1, self.__y_1), Point(self.__x_2, self.__y_1)),
-            Line(Point(self.__x_2, self.__y_2), Point(self.__x_2, self.__y_1)),
-            Line(Point(self.__x_2, self.__y_2), Point(self.__x_1, self.__y_2)),
+            Line(Point(self._x_1, self._y_1), Point(self._x_1, self._y_2)),
+            Line(Point(self._x_1, self._y_1), Point(self._x_2, self._y_1)),
+            Line(Point(self._x_2, self._y_2), Point(self._x_2, self._y_1)),
+            Line(Point(self._x_2, self._y_2), Point(self._x_1, self._y_2)),
         ]
         for i in range(len(walls)):
             if self.has_walls[i]:
-                self.__win.draw_line(walls[i], "blue")
+                self._win.draw_line(walls[i], "blue")
 
     def draw_move(self, other_cell, undo=False):
-        self_center = Point(
-            (self.__x_1 + self.__x_2) / 2, (self.__y_1 + self.__y_2) / 2
-        )
+        if self._win is None:
+            return
+        self_center = Point((self._x_1 + self._x_2) / 2, (self._y_1 + self._y_2) / 2)
         other_center = Point(
-            (other_cell.__x_1 + other_cell.__x_2) / 2,
-            (other_cell.__y_1 + other_cell.__y_2) / 2,
+            (other_cell._x_1 + other_cell._x_2) / 2,
+            (other_cell._y_1 + other_cell._y_2) / 2,
         )
         line = Line(self_center, other_center)
-        self.__win.draw_line(line, "gray" if undo else "red")
+        self._win.draw_line(line, "gray" if undo else "red")
