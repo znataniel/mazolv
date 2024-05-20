@@ -41,6 +41,24 @@ class TestMaze(unittest.TestCase):
         self.assertNotEqual(m._cells[0][0].has_walls[1], False)
         self.assertNotEqual(m._cells[n_columns - 1][n_rows - 1].has_walls[3], False)
 
+    def test_cell_visited(self):
+        n_rows = 30
+        n_columns = 30
+        m = Maze(0, 0, n_rows, n_columns, 10, 10)
+        m._break_walls_rec(0, 0)
+        m._reset_cells_visited()
+        for row in m._cells:
+            for cell in row:
+                self.assertEqual(cell.visited, False)
+
+    def test_cell_visited_2(self):
+        n_rows = 30
+        n_columns = 30
+        m = Maze(0, 0, n_rows, n_columns, 10, 10)
+        m._break_walls_rec(0, 0)
+        cells_state = set([cell.visited for row in m._cells for cell in row])
+        self.assertEqual(len(cells_state), 2)
+
 
 if __name__ == "__main__":
     unittest.main()
