@@ -1,9 +1,12 @@
 from cell import Cell, Window
 from time import sleep
+import random
 
 
 class Maze:
-    def __init__(self, x_0, y_0, n_rows, n_cols, cell_s_x, cell_s_y, win=None) -> None:
+    def __init__(
+        self, x_0, y_0, n_rows, n_cols, cell_s_x, cell_s_y, win=None, seed=None
+    ) -> None:
         self._cells = []
         self._x_0 = x_0
         self._y_0 = y_0
@@ -13,6 +16,7 @@ class Maze:
         self._cell_s_y = cell_s_y
         self._win = win
         self._create_cells()
+        random.seed(seed)
 
     def _create_cells(self):
         self._cells = [
@@ -45,3 +49,26 @@ class Maze:
         exit_cell.has_walls[3] = False
         self._draw_single_cell(0, 0)
         self._draw_single_cell(self.n_cols - 1, self.n_rows - 1)
+
+    def _break_walls_rec(self, i, j):
+        self._cells[i][j].visited = True
+        adjacents = [
+            [i - 1, j],  # Left
+            [i, j - 1],  # Top
+            [i + 1, j],  # Right
+            [i, j + 1],  # Bottom
+        ]
+        adjacents_possible = []
+        for adjacent in adjacents:
+            if self._cells[adjacent[0]][adjacent[1]].visited:
+                adjacents_possible.append(adjacent)
+        while 1:
+            if not adjacents_possible:
+                self._draw_single_cell(i, j)
+                return
+            chosen = random.choice(adjacents_possible)
+            side = adjacents.index(chosen)
+            self._cells[i][j].has_walls[side]
+            self._cells[chosen[0]][chosen[1]].has_walls[side - 2]
+            self._break_walls_rec(chosen[0], chosen[1])
+            adjacents_possible.remove(chosen)

@@ -4,6 +4,7 @@ from graphics import Point, Window, Line
 class Cell:
     def __init__(self, window=None):
         self.has_walls = [True for i in range(4)]
+        self.visited = False
         self._x_1 = None
         self._x_2 = None
         self._y_1 = None
