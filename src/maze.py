@@ -1,4 +1,4 @@
-from cell import Cell, Window
+from cell import Cell
 from time import sleep
 import random
 
@@ -72,3 +72,8 @@ class Maze:
             self._cells[chosen[0]][chosen[1]].has_walls[side - 2]
             self._break_walls_rec(chosen[0], chosen[1])
             adjacents_possible.remove(chosen)
+
+    def _reset_cells_visited(self):
+        for row in self._cells:
+            for cell in row:
+                cell.visited = False
