@@ -1,7 +1,5 @@
-from graphics import Window, Line, Point
+from graphics import Window
 from maze import Maze
-from cell import Cell
-from random import randrange as rr
 
 
 def main():
@@ -9,7 +7,8 @@ def main():
 
     # --- Maze drawing test
     my_maze = Maze(100, 100, 20, 5, 30, 30, main)
-    my_maze.draw_cells()
+    my_maze._draw_cells()
+    my_maze._break_entrance_and_exit()
 
     main.wait_for_close()
 

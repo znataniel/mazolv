@@ -10,7 +10,7 @@ class Cell:
         self._y_2 = None
         self._win = window
 
-    def draw(self, x_1, x_2, y_1, y_2):
+    def _draw(self, x_1, x_2, y_1, y_2):
         if self._win is None:
             return
         self._x_1 = x_1
@@ -26,8 +26,10 @@ class Cell:
         for i in range(len(walls)):
             if self.has_walls[i]:
                 self._win.draw_line(walls[i], "blue")
+            else:
+                self._win.draw_line(walls[i], "white")
 
-    def draw_move(self, other_cell, undo=False):
+    def _draw_move(self, other_cell, undo=False):
         if self._win is None:
             return
         self_center = Point((self._x_1 + self._x_2) / 2, (self._y_1 + self._y_2) / 2)

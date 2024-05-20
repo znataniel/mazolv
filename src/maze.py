@@ -26,7 +26,7 @@ class Maze:
                 self._draw_single_cell(i, j)
 
     def _draw_single_cell(self, i, j):
-        self._cells[i][j].draw(
+        self._cells[i][j]._draw(
             self._x_0 + j * self._cell_s_x,
             self._x_0 + (j + 1) * self._cell_s_x,
             self._y_0 + i * self._cell_s_y,
@@ -37,3 +37,11 @@ class Maze:
         if self._win:
             self._win.redraw()
         sleep(50e-3)
+
+    def _break_entrance_and_exit(self):
+        entrance_cell = self._cells[0][0]
+        exit_cell = self._cells[self.n_cols - 1][self.n_rows - 1]
+        entrance_cell.has_walls[1] = False
+        exit_cell.has_walls[3] = False
+        self._draw_single_cell(0, 0)
+        self._draw_single_cell(self.n_cols - 1, self.n_rows - 1)
