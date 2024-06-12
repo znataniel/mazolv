@@ -18,6 +18,7 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls_rec(0, 0)
+        self._reset_cells_visited()
         random.seed(seed)
 
     def _create_cells(self):
@@ -38,9 +39,9 @@ class Maze:
             self._y_0 + i * self._cell_s_y,
             self._y_0 + (i + 1) * self._cell_s_y,
         )
-        self.animate()
+        self._animate()
 
-    def animate(self):
+    def _animate(self):
         if self._win:
             self._win.redraw()
             sleep(10e-3)
@@ -82,3 +83,41 @@ class Maze:
         for row in self._cells:
             for cell in row:
                 cell.visited = False
+
+    def solve(self):
+        solved = self._solve_r(0, 0)
+        return solved
+
+    def _solve_r(self, i, j):
+        self._animate()
+        self._cells[i][j].visited = True
+        if (i, j) == (self.n_rows - 1, self.n_cols - 1):
+            return True
+
+        adjacents = [
+            (i, j - 1),  # Left
+            (i - 1, j),  # Top
+            (i, j + 1),  # Right
+            (i + 1, j),  # Bottom
+        ]
+
+        adjacents_possible = []
+        for adjacent in adjacents:
+            if adjacent[0] in range(self.n_rows) and adjacent[1] in range(self.n_cols):
+                adjacents_possible.append(adjacent)
+
+        while adjacents_possible:
+            chosen = random.choice(adjacents_possible)
+            if not self._cells[chosen[0]][chosen[1]].visited:
+                side = adjacents.index(chosen)
+                if (
+                    not self._cells[i][j].has_walls[side]
+                    and not self._cells[chosen[0]][chosen[1]].has_walls[side - 2]
+                ):
+                    self._cells[i][j]._draw_move(self._cells[chosen[0]][chosen[1]])
+                    if self._solve_r(chosen[0], chosen[1]):
+                        return True
+                    else:
+                        self._cells[i][j]._draw_move(self._cells[chosen[0]][chosen[1]], True)
+            adjacents_possible.remove(chosen)
+        return False

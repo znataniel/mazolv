@@ -7,6 +7,7 @@ def main():
 
     # --- Maze drawing test
     my_maze = Maze(100, 100, 15, 20, 30, 30, main)
+    my_maze.solve()
 
     main.wait_for_close()
 
